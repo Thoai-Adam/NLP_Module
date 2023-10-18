@@ -12,10 +12,6 @@ import pandas as pd
 import acquire
 from time import strftime
 
-import warnings
-warnings.filterwarnings('ignore')
-
-
 # This function takes in a string and returns the string normalized
 def basic_clean(string):
     # we will normalize our data into standard NFKD unicode, feed it into an ascii encoding
@@ -27,20 +23,13 @@ def basic_clean(string):
     string = re.sub(r"[^\w0-9'\s]", '', string).lower()
     return string
 
-
-
-
-
 # This functions takes in a string and returns a tokenized string
 def tokenize(string):
     # make our tokenizer
     tokenizer = nltk.tokenize.ToktokTokenizer()
     # apply our tokenization to the string input
     string = tokenizer.tokenize(string, return_str = True)
-    
     return string
-
-
 
 # This function takes in a string and returns a string with words stemmed
 def stem(string):
@@ -53,8 +42,6 @@ def stem(string):
     
     return string
 
-
-
 # This function takes in a string  and returns a string with words lemmatized
 def lemmatize(string):
     # create our lemmatizer object
@@ -66,9 +53,6 @@ def lemmatize(string):
     string = ' '.join(lemmas)
     #return the altered document
     return string
-
-
-
 
 # This function takes in a string, optional extra_words and exclued_words parameters with default empty lists and returns a string
 def remove_stopwords(string, extra_words = [], exclude_words = []):
@@ -85,6 +69,6 @@ def remove_stopwords(string, extra_words = [], exclude_words = []):
     string_without_stopwords = ' '.join(filtered_words)
     return string_without_stopwords
 
-
-
-
+def clean(string, extra_stopwords):    
+    words = remove_stopwords((tokenize(basic_clean(string))), extra_stopwords)
+    return words
